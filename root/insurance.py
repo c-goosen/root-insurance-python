@@ -9,7 +9,6 @@ class Client:
         self.baseURL = "https://sandbox.root.co.za/v1/insurance"
         self.appID = os.environ.get('ROOT_APP_ID')
         self.appSecret = os.environ.get('ROOT_APP_SECRET')
-        self.baseURL = baseURL
         self.applications = Applications(self)
         self.claims = Claims(self)
         self.policyholders = PolicyHolders(self)
@@ -29,7 +28,7 @@ class Resource:
         self.client = client
     
     def call(self, method, path, params=None, **kwargs):
-        return self.call(method, path, params, **kwargs)
+        return self.client.call(method, path, params, **kwargs)
 
 
 class Applications(Resource):
