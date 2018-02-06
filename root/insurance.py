@@ -1,13 +1,15 @@
 import requests
 import logging
+import os
 
 logging.basicConfig(level=logging.DEBUG)
 
 class Client:
-    def __init__(self, baseURL, appID, appSecret):
+    def __init__(self):
+        self.baseURL = "https://sandbox.root.co.za/v1/insurance"
+        self.appID = os.environ.get('ROOT_APP_ID')
+        self.appSecret = os.environ.get('ROOT_APP_SECRET')
         self.baseURL = baseURL
-        self.appID = appID
-        self.appSecret = appSecret
         self.applications = Applications(self)
         self.claims = Claims(self)
         self.policyholders = PolicyHolders(self)
