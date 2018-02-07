@@ -17,10 +17,10 @@ class Client:
         self.quotes = Quotes(self)
 
     def call(self, method, path, params=None, **kwargs):
-        resp = requests.request(method, f'{self.baseURL}/{path}', params=params, auth=(self.appID, self.appSecret))
+        resp = requests.request(method, f'{self.baseURL}/{path}', params=params, headers={"Content-Type": "application/json"}, auth=(self.appID, self.appSecret), **kwargs)
         if resp.status_code == 200 or resp.status_code == 201:
             return resp.json()
-        raise Exception(resp.status_code)
+        raise Exception(resp.status_code, resp.json())
 
 
 class Resource:
@@ -177,7 +177,7 @@ class Quotes(Resource):
             data = self._funeral_quote(opts)
         else:
             raise Exception("invalid quote type")
-        self.call("post", "quotes", json=data)
+        return self.call("post", "quotes", json=data)
 
     def _gadget_quote(self, opts):
         return {
