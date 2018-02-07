@@ -166,8 +166,9 @@ class Quotes(Resource):
     def __init__(self, client):
          super().__init__(client)
 
-    def create(self, type_, opts):
+    def create(self, opts):
         data = {}
+        type_ = opts["type"]
         if type_ == "root_gadgets":
             data = self._gadget_quote(opts)
         elif type_ == "root_term":
